@@ -1,11 +1,33 @@
 import React from 'react';
-import { View, StyleSheet, Dimensions } from 'react-native';
+import { View, StyleSheet, Dimensions, ImageBackground, ImageSourcePropType } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { colors } from '../../theme/colors';
 
 const { width, height } = Dimensions.get('window');
 
-export const AppBackground: React.FC<{ children?: React.ReactNode }> = ({ children }) => {
+interface AppBackgroundProps {
+  children?: React.ReactNode;
+  imageSource?: ImageSourcePropType;
+}
+
+export const AppBackground: React.FC<AppBackgroundProps> = ({ children, imageSource }) => {
+  if (imageSource) {
+    return (
+      <View style={styles.container}>
+        <ImageBackground 
+          source={imageSource} 
+          style={[StyleSheet.absoluteFillObject, { width: '100%', height: '100%' }]} 
+          imageStyle={{ resizeMode: 'cover', width: '100%', height: '100%' }}
+        >
+          <View style={styles.darkOverlay} />
+        </ImageBackground>
+        <View style={styles.content}>
+          {children}
+        </View>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -30,11 +52,18 @@ export const AppBackground: React.FC<{ children?: React.ReactNode }> = ({ childr
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width: '100%',
+    height: '100%',
     backgroundColor: colors.background,
   },
   content: {
     flex: 1,
     zIndex: 10,
+  },
+  darkOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(5, 11, 20, 0.7)', // Adds darkness over the image to keep text readable
+    zIndex: 1,
   },
   gridOverlay: {
     ...StyleSheet.absoluteFillObject,
