@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView, Image } from 'react-native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList } from '../../navigation/AppNavigator';
@@ -23,23 +23,25 @@ export const LoginScreen = () => {
 
   return (
     <AppBackground imageSource={bgImage}>
-      <KeyboardAvoidingView 
+      <KeyboardAvoidingView
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
+        <View style={styles.logosContainer}>
+          <Image source={require('../../../assets/ems.png')} style={styles.logoEms} resizeMode="contain" />
+          <Image source={require('../../../assets/siemens.png')} style={styles.logoSiemens} resizeMode="contain" />
+        </View>
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.header}>
             <Text style={styles.title}>CN-05</Text>
             <Text style={styles.subtitle}>Secure Access Portal</Text>
-            <Text style={styles.description}>
-              Authorized personnel only. Please enter your credentials to access the intelligent management system.
-            </Text>
+
           </View>
 
           <View style={styles.loginCard}>
             <BlurView intensity={30} tint="dark" style={styles.cardBlur}>
               <Text style={styles.cardTitle}>Sign In</Text>
-              
+
               <View style={styles.inputGroup}>
                 <View style={styles.inputWrapper}>
                   <MaterialCommunityIcons name="account-outline" size={20} color={colors.accentCyan} style={styles.inputIcon} />
@@ -66,8 +68,8 @@ export const LoginScreen = () => {
                 </View>
               </View>
 
-              <TouchableOpacity 
-                style={styles.loginButton} 
+              <TouchableOpacity
+                style={styles.loginButton}
                 onPress={login}
                 activeOpacity={0.8}
               >
@@ -89,7 +91,7 @@ export const LoginScreen = () => {
             </BlurView>
           </View>
 
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.visitorLink}
             onPress={() => navigation.navigate('TowerInfo')}
           >
@@ -109,10 +111,10 @@ const styles = StyleSheet.create({
     padding: 24,
     paddingTop: 80,
     flexGrow: 1,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   header: {
-    marginBottom: 40,
+    marginBottom: 100,
     alignItems: 'center',
   },
   title: {
@@ -227,5 +229,23 @@ const styles = StyleSheet.create({
   },
   footerSpacing: {
     height: 40,
-  }
+  },
+  logosContainer: {
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 40 : 20,
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 24,
+    zIndex: 100,
+  },
+  logoEms: {
+    width: 100,
+    height: 40,
+  },
+  logoSiemens: {
+    width: 120,
+    height: 40,
+  },
 });
