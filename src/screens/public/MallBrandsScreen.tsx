@@ -45,14 +45,9 @@ export const MallBrandsScreen = () => {
       </View>
 
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.infoBox}>
-          <MaterialCommunityIcons name="information-outline" size={20} color={colors.accentSky} />
-          <Text style={styles.infoText}>
-            Exclusive discounts are automatically applied when scanning your Digital Twin ID at participating stores.
-          </Text>
-        </View>
 
-        <Text style={styles.sectionTitle}>Top 10 High-End Brands</Text>
+
+        <Text style={styles.sectionTitle}>High-End Brands</Text>
 
         <View style={styles.list}>
           {BRANDS.map((brand, index) => (
