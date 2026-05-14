@@ -119,20 +119,20 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: typography.fontFamilies.orbitron,
-    fontSize: 36,
+    fontSize: 28,
     color: colors.textPrimary,
-    letterSpacing: 3,
-    marginBottom: 8,
+    letterSpacing: 2,
+    marginBottom: 6,
     textAlign: 'center',
   },
   subtitle: {
     fontFamily: typography.fontFamilies.robotoMedium,
-    fontSize: 16,
+    fontSize: 14,
     color: colors.accentCyan,
-    marginBottom: 16,
+    marginBottom: 12,
     textAlign: 'center',
     textTransform: 'uppercase',
-    letterSpacing: 2,
+    letterSpacing: 1.5,
   },
   description: {
     fontFamily: typography.fontFamilies.roboto,
@@ -155,9 +155,9 @@ const styles = StyleSheet.create({
   },
   cardTitle: {
     fontFamily: typography.fontFamilies.orbitron,
-    fontSize: 18,
+    fontSize: 16,
     color: colors.textPrimary,
-    marginBottom: 24,
+    marginBottom: 20,
     textAlign: 'center',
   },
   inputGroup: {
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: colors.textPrimary,
     fontFamily: typography.fontFamilies.roboto,
-    fontSize: 16,
+    fontSize: 15,
   },
   loginButton: {
     borderRadius: 12,
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   loginButtonText: {
     fontFamily: typography.fontFamilies.robotoBold,
-    fontSize: 16,
+    fontSize: 15,
     color: colors.background,
     marginRight: 10,
     textTransform: 'uppercase',
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   },
   biometricText: {
     fontFamily: typography.fontFamilies.roboto,
-    fontSize: 12,
+    fontSize: 11,
     color: colors.textSecondary,
     marginTop: 8,
   },
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   visitorLinkText: {
     fontFamily: typography.fontFamilies.robotoMedium,
-    fontSize: 14,
+    fontSize: 13,
     color: colors.accentCyan,
     marginRight: 8,
   },
