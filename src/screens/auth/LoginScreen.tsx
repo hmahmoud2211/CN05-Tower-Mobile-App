@@ -243,9 +243,11 @@ const styles = StyleSheet.create({
   logoEms: {
     width: 80,
     height: 32,
+    marginLeft: -20,
   },
   logoSiemens: {
     width: 100,
     height: 32,
+    marginRight: -20,
   },
 });
