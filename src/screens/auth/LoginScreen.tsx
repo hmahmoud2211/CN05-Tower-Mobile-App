@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   header: {
-    marginBottom: 100,
+    marginBottom: 60,
     alignItems: 'center',
   },
   title: {
@@ -241,11 +241,11 @@ const styles = StyleSheet.create({
     zIndex: 100,
   },
   logoEms: {
-    width: 100,
-    height: 40,
+    width: 80,
+    height: 32,
   },
   logoSiemens: {
-    width: 120,
-    height: 40,
+    width: 100,
+    height: 32,
   },
 });
