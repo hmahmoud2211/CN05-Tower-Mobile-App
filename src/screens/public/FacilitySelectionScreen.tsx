@@ -9,11 +9,13 @@ import { typography } from '../../theme/typography';
 import { BlurView } from 'expo-blur';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useAuthStore } from '../../store/useAuthStore';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'FacilitySelection'>;
 
 export const FacilitySelectionScreen = () => {
   const navigation = useNavigation<NavigationProp>();
+  const { logout } = useAuthStore();
 
   const facilities = [
     {
@@ -48,7 +50,7 @@ export const FacilitySelectionScreen = () => {
     <AppBackground imageSource={bgImage}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+          <TouchableOpacity onPress={logout} style={styles.backButton}>
             <MaterialCommunityIcons name="arrow-left" size={24} color={colors.textPrimary} />
           </TouchableOpacity>
           <Text style={styles.title}>Select Destination</Text>

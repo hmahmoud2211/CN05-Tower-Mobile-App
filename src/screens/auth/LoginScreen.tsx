@@ -1,140 +1,231 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, StyleSheet, TextInput, TouchableOpacity, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../../navigation/AppNavigator';
 import { AppBackground } from '../../components/ui/AppBackground';
-import { Typography } from '../../components/ui/Typography';
-import { GlassCard } from '../../components/ui/GlassCard';
-import { useAuthStore } from '../../store/useAuthStore';
 import { colors } from '../../theme/colors';
-import { spacing } from '../../theme/spacing';
+import { typography } from '../../theme/typography';
+import { BlurView } from 'expo-blur';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useAuthStore } from '../../store/useAuthStore';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
 
 export const LoginScreen = () => {
+  const navigation = useNavigation<NavigationProp>();
   const { login } = useAuthStore();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  const bgImage = require('../../../assets/cn05-night.png');
+
   return (
-    <AppBackground>
+    <AppBackground imageSource={bgImage}>
       <KeyboardAvoidingView 
-        style={styles.container}
+        style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View style={styles.brandingContainer}>
-          <MaterialCommunityIcons name="office-building" size={64} color={colors.accentCyan} style={styles.logo} />
-          <Typography variant="hero" fontFamily="orbitron" color={colors.textPrimary} align="center">
-            CN-05 TOWER
-          </Typography>
-          <Typography variant="sm" color={colors.accentCyan} align="center" style={styles.subtitle}>
-            INTELLIGENT MANAGEMENT SYSTEM
-          </Typography>
-        </View>
-
-        <GlassCard style={styles.card} highlighted borderColor={colors.glassBorder}>
-          <Typography variant="lg" fontFamily="orbitron" style={{ marginBottom: spacing.lg }}>
-            SECURE ACCESS
-          </Typography>
-
-          <View style={styles.inputContainer}>
-            <MaterialCommunityIcons name="account" size={20} color={colors.textSecondary} style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Operator ID"
-              placeholderTextColor={colors.textMuted}
-              value={username}
-              onChangeText={setUsername}
-              autoCapitalize="none"
-            />
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          <View style={styles.header}>
+            <Text style={styles.title}>CN-05</Text>
+            <Text style={styles.subtitle}>Secure Access Portal</Text>
+            <Text style={styles.description}>
+              Authorized personnel only. Please enter your credentials to access the intelligent management system.
+            </Text>
           </View>
 
-          <View style={styles.inputContainer}>
-            <MaterialCommunityIcons name="lock" size={20} color={colors.textSecondary} style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Passcode"
-              placeholderTextColor={colors.textMuted}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
+          <View style={styles.loginCard}>
+            <BlurView intensity={30} tint="dark" style={styles.cardBlur}>
+              <Text style={styles.cardTitle}>Sign In</Text>
+              
+              <View style={styles.inputGroup}>
+                <View style={styles.inputWrapper}>
+                  <MaterialCommunityIcons name="account-outline" size={20} color={colors.accentCyan} style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Username"
+                    placeholderTextColor={colors.textMuted}
+                    value={username}
+                    onChangeText={setUsername}
+                    autoCapitalize="none"
+                  />
+                </View>
+
+                <View style={styles.inputWrapper}>
+                  <MaterialCommunityIcons name="lock-outline" size={20} color={colors.accentCyan} style={styles.inputIcon} />
+                  <TextInput
+                    style={styles.input}
+                    placeholder="Password"
+                    placeholderTextColor={colors.textMuted}
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                  />
+                </View>
+              </View>
+
+              <TouchableOpacity 
+                style={styles.loginButton} 
+                onPress={login}
+                activeOpacity={0.8}
+              >
+                <LinearGradient
+                  colors={[colors.accentCyan, colors.accentTeal]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                  style={styles.gradientButton}
+                >
+                  <Text style={styles.loginButtonText}>Login</Text>
+                  <MaterialCommunityIcons name="login" size={20} color={colors.background} />
+                </LinearGradient>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.biometricBtn} activeOpacity={0.7}>
+                <MaterialCommunityIcons name="fingerprint" size={32} color={colors.accentCyan} />
+                <Text style={styles.biometricText}>Biometric Login</Text>
+              </TouchableOpacity>
+            </BlurView>
           </View>
 
-          <TouchableOpacity style={styles.button} onPress={login} activeOpacity={0.8}>
-            <Typography variant="md" fontFamily="orbitron" color={colors.background} style={{ fontWeight: 'bold' }}>
-              INITIALIZE CONNECTION
-            </Typography>
+          <TouchableOpacity 
+            style={styles.visitorLink}
+            onPress={() => navigation.navigate('TowerInfo')}
+          >
+            <Text style={styles.visitorLinkText}>Visitor Access & Information</Text>
+            <MaterialCommunityIcons name="arrow-right" size={16} color={colors.accentCyan} />
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.biometricBtn} activeOpacity={0.8}>
-            <MaterialCommunityIcons name="fingerprint" size={32} color={colors.accentCyan} />
-            <Typography variant="xs" color={colors.textSecondary} style={{ marginTop: 8 }}>
-              BIOMETRIC LOGIN
-            </Typography>
-          </TouchableOpacity>
-        </GlassCard>
-
+          <View style={styles.footerSpacing} />
+        </ScrollView>
       </KeyboardAvoidingView>
     </AppBackground>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  scrollContent: {
+    padding: 24,
+    paddingTop: 80,
+    flexGrow: 1,
     justifyContent: 'center',
-    padding: spacing.screenPadding,
   },
-  brandingContainer: {
+  header: {
+    marginBottom: 40,
     alignItems: 'center',
-    marginBottom: spacing.xxl,
   },
-  logo: {
-    marginBottom: spacing.sm,
-    textShadowColor: colors.glassGlowTeal,
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 20,
+  title: {
+    fontFamily: typography.fontFamilies.orbitron,
+    fontSize: 36,
+    color: colors.textPrimary,
+    letterSpacing: 3,
+    marginBottom: 8,
+    textAlign: 'center',
   },
   subtitle: {
-    letterSpacing: 4,
-    marginTop: 4,
+    fontFamily: typography.fontFamilies.robotoMedium,
+    fontSize: 16,
+    color: colors.accentCyan,
+    marginBottom: 16,
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 2,
   },
-  card: {
-    padding: spacing.xl,
+  description: {
+    fontFamily: typography.fontFamilies.roboto,
+    fontSize: 14,
+    color: colors.textSecondary,
+    textAlign: 'center',
+    lineHeight: 22,
+    maxWidth: '80%',
   },
-  inputContainer: {
+  loginCard: {
+    borderRadius: 20,
+    overflow: 'hidden',
+    borderColor: colors.glassBorder,
+    borderWidth: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    marginBottom: 24,
+  },
+  cardBlur: {
+    padding: 24,
+  },
+  cardTitle: {
+    fontFamily: typography.fontFamilies.orbitron,
+    fontSize: 18,
+    color: colors.textPrimary,
+    marginBottom: 24,
+    textAlign: 'center',
+  },
+  inputGroup: {
+    marginBottom: 24,
+  },
+  inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: 'rgba(11, 21, 38, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.glassBorder,
-    borderRadius: spacing.borderRadius.sm,
-    marginBottom: spacing.md,
-    height: 50,
-    paddingHorizontal: spacing.md,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    marginBottom: 16,
+    paddingHorizontal: 16,
+    height: 56,
   },
   inputIcon: {
-    marginRight: spacing.sm,
+    marginRight: 12,
   },
   input: {
     flex: 1,
     color: colors.textPrimary,
-    fontFamily: 'Inter',
+    fontFamily: typography.fontFamilies.roboto,
     fontSize: 16,
   },
-  button: {
-    backgroundColor: colors.accentCyan,
-    height: 50,
-    borderRadius: spacing.borderRadius.sm,
+  loginButton: {
+    borderRadius: 12,
+    overflow: 'hidden',
+    shadowColor: colors.accentCyan,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  gradientButton: {
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: spacing.sm,
-    shadowColor: colors.accentCyan,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 5,
+    paddingVertical: 16,
+  },
+  loginButtonText: {
+    fontFamily: typography.fontFamilies.robotoBold,
+    fontSize: 16,
+    color: colors.background,
+    marginRight: 10,
+    textTransform: 'uppercase',
   },
   biometricBtn: {
     alignItems: 'center',
-    marginTop: spacing.xl,
+    marginTop: 24,
   },
+  biometricText: {
+    fontFamily: typography.fontFamilies.roboto,
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginTop: 8,
+  },
+  visitorLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    padding: 12,
+  },
+  visitorLinkText: {
+    fontFamily: typography.fontFamilies.robotoMedium,
+    fontSize: 14,
+    color: colors.accentCyan,
+    marginRight: 8,
+  },
+  footerSpacing: {
+    height: 40,
+  }
 });
