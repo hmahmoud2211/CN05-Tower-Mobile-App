@@ -6,9 +6,7 @@ import { RootStackParamList } from '../../navigation/AppNavigator';
 import { AppBackground } from '../../components/ui/AppBackground';
 import { colors } from '../../theme/colors';
 import { typography } from '../../theme/typography';
-import { BlurView } from 'expo-blur';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useAuthStore } from '../../store/useAuthStore';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -31,66 +29,53 @@ export const LoginScreen = () => {
           <Image source={require('../../../assets/ems.png')} style={styles.logoEms} resizeMode="contain" />
           <Image source={require('../../../assets/siemens.png')} style={styles.logoSiemens} resizeMode="contain" />
         </View>
-        <ScrollView contentContainerStyle={styles.scrollContent}>
+
+        <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
+            <Text style={styles.welcomeText}>WELCOME TO</Text>
             <Text style={styles.title}>CN-05</Text>
+            <Text style={styles.subtitle}>Smart Infrastructure Control Portal</Text>
           </View>
 
-          <View style={styles.loginCard}>
-            <BlurView intensity={45} tint="dark" style={styles.cardBlur}>
-              <Text style={styles.cardTitle}>Sign In</Text>
-
-              <View style={styles.inputGroup}>
-                <View style={styles.inputWrapper}>
-                  <MaterialCommunityIcons name="account-outline" size={20} color={colors.accentCyan} style={styles.inputIcon} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Username"
-                    placeholderTextColor={colors.textMuted}
-                    value={username}
-                    onChangeText={setUsername}
-                    autoCapitalize="none"
-                  />
-                </View>
-
-                <View style={styles.inputWrapper}>
-                  <MaterialCommunityIcons name="lock-outline" size={20} color={colors.accentCyan} style={styles.inputIcon} />
-                  <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                    placeholderTextColor={colors.textMuted}
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
-                  />
-                </View>
+          <View style={styles.formContainer}>
+            <View style={styles.inputGroup}>
+              <View style={styles.flatInputWrapper}>
+                <TextInput
+                  style={styles.flatInput}
+                  placeholder="Username"
+                  placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                  value={username}
+                  onChangeText={setUsername}
+                  autoCapitalize="none"
+                />
               </View>
 
-              <View style={styles.actionsRow}>
-                <TouchableOpacity
-                  style={styles.loginButton}
-                  onPress={login}
-                  activeOpacity={0.8}
-                >
-                  <LinearGradient
-                    colors={[colors.accentCyan, colors.accentTeal]}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    style={styles.gradientButton}
-                  >
-                    <Text style={styles.loginButtonText}>Login</Text>
-                    <MaterialCommunityIcons name="login" size={20} color={colors.background} />
-                  </LinearGradient>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.biometricBtnSide} activeOpacity={0.7}>
-                  <MaterialCommunityIcons name="fingerprint" size={28} color={colors.accentCyan} />
-                </TouchableOpacity>
+              <View style={styles.flatInputWrapper}>
+                <TextInput
+                  style={styles.flatInput}
+                  placeholder="Password"
+                  placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                />
               </View>
-            </BlurView>
+            </View>
+
+            <View style={styles.actionsRow}>
+              <TouchableOpacity
+                style={styles.ghostLoginButton}
+                onPress={login}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.ghostLoginText}>SIGN IN</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.ghostBiometricBtn} activeOpacity={0.7}>
+                <MaterialCommunityIcons name="fingerprint" size={28} color={colors.accentCyan} />
+              </TouchableOpacity>
+            </View>
           </View>
-
-
 
           <View style={styles.footerSpacing} />
         </ScrollView>
@@ -101,141 +86,95 @@ export const LoginScreen = () => {
 
 const styles = StyleSheet.create({
   scrollContent: {
-    padding: 24,
-    paddingTop: 40,
+    padding: 32,
     flexGrow: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   header: {
-    position: 'absolute',
-    top: Platform.OS === 'ios' ? 110 : 80,
-    left: 0,
-    right: 0,
     alignItems: 'center',
+    marginBottom: 48,
+    width: '100%',
+  },
+  welcomeText: {
+    fontFamily: typography.fontFamilies.robotoMedium,
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.6)',
+    letterSpacing: 4,
+    textAlign: 'center',
+    marginBottom: 8,
+    textTransform: 'uppercase',
   },
   title: {
     fontFamily: typography.fontFamilies.orbitron,
-    fontSize: 28,
-    color: colors.textPrimary,
-    letterSpacing: 2,
-    marginBottom: 6,
+    fontSize: 40,
+    color: colors.accentCyan,
+    letterSpacing: 4,
     textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 12,
   },
   subtitle: {
-    fontFamily: typography.fontFamilies.robotoMedium,
-    fontSize: 14,
-    color: colors.accentCyan,
-    marginBottom: 12,
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    letterSpacing: 1.5,
-  },
-  description: {
     fontFamily: typography.fontFamilies.roboto,
-    fontSize: 14,
-    color: colors.textSecondary,
+    fontSize: 13,
+    color: 'rgba(255, 255, 255, 0.45)',
     textAlign: 'center',
-    lineHeight: 22,
-    maxWidth: '80%',
+    lineHeight: 18,
+    maxWidth: '85%',
   },
-  loginCard: {
-    borderRadius: 20,
-    overflow: 'hidden',
-    borderColor: colors.glassBorder,
-    borderWidth: 1,
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
-    marginBottom: 24,
-  },
-  cardBlur: {
-    padding: 24,
-  },
-  cardTitle: {
-    fontFamily: typography.fontFamilies.orbitron,
-    fontSize: 16,
-    color: colors.textPrimary,
-    marginBottom: 20,
-    textAlign: 'center',
+  formContainer: {
+    width: '100%',
+    paddingHorizontal: 8,
   },
   inputGroup: {
+    marginBottom: 36,
+  },
+  flatInputWrapper: {
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.2)',
     marginBottom: 24,
+    height: 48,
+    justifyContent: 'center',
   },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
-    marginBottom: 16,
-    paddingHorizontal: 16,
-    height: 56,
-  },
-  inputIcon: {
-    marginRight: 12,
-  },
-  input: {
-    flex: 1,
+  flatInput: {
     color: colors.textPrimary,
     fontFamily: typography.fontFamilies.roboto,
-    fontSize: 15,
+    fontSize: 16,
+    paddingVertical: 8,
   },
   actionsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 16,
   },
-  loginButton: {
+  ghostLoginButton: {
     flex: 1,
-    borderRadius: 12,
-    overflow: 'hidden',
-    shadowColor: colors.accentCyan,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  gradientButton: {
-    flexDirection: 'row',
+    height: 56,
+    borderWidth: 1.5,
+    borderColor: colors.accentCyan,
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 16,
   },
-  loginButtonText: {
-    fontFamily: typography.fontFamilies.robotoBold,
-    fontSize: 15,
-    color: colors.background,
-    marginRight: 10,
-    textTransform: 'uppercase',
+  ghostLoginText: {
+    fontFamily: typography.fontFamilies.orbitron,
+    fontSize: 14,
+    color: colors.accentCyan,
+    letterSpacing: 2,
+    fontWeight: 'bold',
   },
-  biometricBtnSide: {
+  ghostBiometricBtn: {
     width: 56,
     height: 56,
-    borderRadius: 12,
     borderWidth: 1.5,
-    borderColor: 'rgba(255, 255, 255, 0.15)',
-    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+    borderRadius: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-  },
-  visitorLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    alignSelf: 'center',
-    padding: 12,
-  },
-  visitorLinkText: {
-    fontFamily: typography.fontFamilies.robotoMedium,
-    fontSize: 13,
-    color: colors.accentCyan,
-    marginRight: 8,
+    backgroundColor: 'transparent',
   },
   footerSpacing: {
-    height: 40,
+    height: 60,
   },
   logosContainer: {
     position: 'absolute',
