@@ -115,9 +115,9 @@ const styles = StyleSheet.create({
   },
   towerText: {
     fontFamily: typography.fontFamilies.orbitron,
-    fontSize: 15,
+    fontSize: 14,
     color: '#FFFFFF',
-    letterSpacing: 10,
+    letterSpacing: 5,
     textAlign: 'center',
     fontWeight: 'bold',
     marginTop: -2,
