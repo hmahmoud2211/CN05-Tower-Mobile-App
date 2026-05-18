@@ -24,18 +24,41 @@ export const AIAssistantScreen = () => {
     'Energy Forecast'
   ];
 
-  const sendMessage = () => {
-    if (!input.trim()) return;
-    setMessages([...messages, { id: Date.now().toString(), text: input, sender: 'user' }]);
-    setInput('');
-    // Mock response
+  const sendMessage = (textToSend?: string) => {
+    const query = (textToSend || input).trim();
+    if (!query) return;
+
+    // Add user message
+    setMessages(prev => [...prev, { id: Date.now().toString(), text: query, sender: 'user' }]);
+    
+    if (!textToSend) {
+      setInput('');
+    }
+
+    // Smart hardcoded responses
+    let responseText = "I am analyzing your request. Standby for system diagnostic data...";
+    const lowerQuery = query.toLowerCase();
+
+    if (lowerQuery.includes('hvac')) {
+      responseText = "Floor 12 HVAC is operating normally. Average temperature is 22.4°C and humidity is 45%. Zone 3 cooling efficiency is slightly reduced but within normal parameters.";
+    } else if (lowerQuery.includes('alert') || lowerQuery.includes('warning')) {
+      responseText = "Currently, there is 1 Active Warning: Elevator E5 Motor is showing abnormal vibration patterns. Staging maintenance recommended within 48h.";
+    } else if (lowerQuery.includes('elevator') || lowerQuery.includes('lift') || lowerQuery.includes('log')) {
+      responseText = "Elevator Logs for today: All 6 elevators operational. Elevator E5 has logged 12 warning alerts since 08:00 AM regarding rotor speed deviation. Inspections scheduled.";
+    } else if (lowerQuery.includes('energy') || lowerQuery.includes('power') || lowerQuery.includes('forecast')) {
+      responseText = "Energy Forecast: Peak usage is predicted between 14:00 and 17:00 at 4,800 kW. Recommended action: Pre-cool residential zones by 1°C at 13:00 to shave peak load by 12%.";
+    } else {
+      responseText = `I have received your query regarding "${query}". The digital twin sensors show that all CN-05 infrastructure systems are currently online and within nominal operational parameters.`;
+    }
+
+    // Mock response after 800ms
     setTimeout(() => {
       setMessages(prev => [...prev, { 
-        id: Date.now().toString() + 'ai', 
-        text: 'I am analyzing your request. Standby for system diagnostic data...', 
+        id: (Date.now() + 1).toString() + 'ai', 
+        text: responseText, 
         sender: 'ai' 
       }]);
-    }, 1000);
+    }, 800);
   };
 
   return (
@@ -82,7 +105,7 @@ export const AIAssistantScreen = () => {
         <View style={styles.suggestionsContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
             {suggestions.map((sug, i) => (
-              <TouchableOpacity key={i} style={styles.suggestionChip}>
+              <TouchableOpacity key={i} style={styles.suggestionChip} onPress={() => sendMessage(sug)}>
                 <Typography variant="xs" color={colors.accentCyan}>{sug}</Typography>
               </TouchableOpacity>
             ))}
@@ -101,12 +124,12 @@ export const AIAssistantScreen = () => {
               placeholderTextColor={colors.textMuted}
               value={input}
               onChangeText={setInput}
-              onSubmitEditing={sendMessage}
+              onSubmitEditing={() => sendMessage()}
             />
             
             <TouchableOpacity 
               style={[styles.sendButton, input ? styles.sendButtonActive : null]} 
-              onPress={sendMessage}
+              onPress={() => sendMessage()}
               disabled={!input}
             >
               <MaterialCommunityIcons 
@@ -164,6 +187,7 @@ const styles = StyleSheet.create({
   messageBubble: {
     padding: spacing.md,
     borderRadius: spacing.borderRadius.md,
+    flexShrink: 1,
   },
   messageBubbleUser: {
     backgroundColor: colors.accentCyan,
@@ -190,7 +214,7 @@ const styles = StyleSheet.create({
   },
   inputCard: {
     marginHorizontal: spacing.screenPadding,
-    marginBottom: spacing.screenPadding,
+    marginBottom: Platform.OS === 'ios' ? 100 : 85,
     borderRadius: spacing.borderRadius.full,
   },
   inputWrapper: {

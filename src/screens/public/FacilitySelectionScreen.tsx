@@ -71,7 +71,7 @@ export const FacilitySelectionScreen = () => {
               onPress={facility.action}
               activeOpacity={0.8}
             >
-              <BlurView intensity={30} tint="dark" style={styles.card}>
+              <BlurView intensity={45} tint="dark" style={styles.card}>
                 <View style={[styles.iconContainer, { backgroundColor: facility.color + '20' }]}>
                   <MaterialCommunityIcons name={facility.icon as any} size={40} color={facility.color} />
                 </View>

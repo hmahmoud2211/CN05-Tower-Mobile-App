@@ -52,7 +52,7 @@ export const MallBrandsScreen = () => {
         <View style={styles.list}>
           {BRANDS.map((brand, index) => (
             <View key={brand.id} style={styles.brandCardWrapper}>
-              <BlurView intensity={25} tint="dark" style={styles.brandCard}>
+              <BlurView intensity={40} tint="dark" style={styles.brandCard}>
                 <View style={styles.rankBadge}>
                   <Text style={styles.rankText}>{index + 1}</Text>
                 </View>

@@ -34,12 +34,10 @@ export const LoginScreen = () => {
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.header}>
             <Text style={styles.title}>CN-05</Text>
-            <Text style={styles.subtitle}>Secure Access Portal</Text>
-
           </View>
 
           <View style={styles.loginCard}>
-            <BlurView intensity={30} tint="dark" style={styles.cardBlur}>
+            <BlurView intensity={45} tint="dark" style={styles.cardBlur}>
               <Text style={styles.cardTitle}>Sign In</Text>
 
               <View style={styles.inputGroup}>
@@ -68,36 +66,31 @@ export const LoginScreen = () => {
                 </View>
               </View>
 
-              <TouchableOpacity
-                style={styles.loginButton}
-                onPress={login}
-                activeOpacity={0.8}
-              >
-                <LinearGradient
-                  colors={[colors.accentCyan, colors.accentTeal]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                  style={styles.gradientButton}
+              <View style={styles.actionsRow}>
+                <TouchableOpacity
+                  style={styles.loginButton}
+                  onPress={login}
+                  activeOpacity={0.8}
                 >
-                  <Text style={styles.loginButtonText}>Login</Text>
-                  <MaterialCommunityIcons name="login" size={20} color={colors.background} />
-                </LinearGradient>
-              </TouchableOpacity>
+                  <LinearGradient
+                    colors={[colors.accentCyan, colors.accentTeal]}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 1 }}
+                    style={styles.gradientButton}
+                  >
+                    <Text style={styles.loginButtonText}>Login</Text>
+                    <MaterialCommunityIcons name="login" size={20} color={colors.background} />
+                  </LinearGradient>
+                </TouchableOpacity>
 
-              <TouchableOpacity style={styles.biometricBtn} activeOpacity={0.7}>
-                <MaterialCommunityIcons name="fingerprint" size={32} color={colors.accentCyan} />
-                <Text style={styles.biometricText}>Biometric Login</Text>
-              </TouchableOpacity>
+                <TouchableOpacity style={styles.biometricBtnSide} activeOpacity={0.7}>
+                  <MaterialCommunityIcons name="fingerprint" size={28} color={colors.accentCyan} />
+                </TouchableOpacity>
+              </View>
             </BlurView>
           </View>
 
-          <TouchableOpacity
-            style={styles.visitorLink}
-            onPress={() => navigation.navigate('TowerInfo')}
-          >
-            <Text style={styles.visitorLinkText}>Visitor Access & Information</Text>
-            <MaterialCommunityIcons name="arrow-right" size={16} color={colors.accentCyan} />
-          </TouchableOpacity>
+
 
           <View style={styles.footerSpacing} />
         </ScrollView>
@@ -109,12 +102,15 @@ export const LoginScreen = () => {
 const styles = StyleSheet.create({
   scrollContent: {
     padding: 24,
-    paddingTop: 80,
+    paddingTop: 40,
     flexGrow: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
   },
   header: {
-    marginBottom: 60,
+    position: 'absolute',
+    top: Platform.OS === 'ios' ? 110 : 80,
+    left: 0,
+    right: 0,
     alignItems: 'center',
   },
   title: {
@@ -183,7 +179,13 @@ const styles = StyleSheet.create({
     fontFamily: typography.fontFamilies.roboto,
     fontSize: 15,
   },
+  actionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
   loginButton: {
+    flex: 1,
     borderRadius: 12,
     overflow: 'hidden',
     shadowColor: colors.accentCyan,
@@ -205,15 +207,20 @@ const styles = StyleSheet.create({
     marginRight: 10,
     textTransform: 'uppercase',
   },
-  biometricBtn: {
+  biometricBtnSide: {
+    width: 56,
+    height: 56,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
     alignItems: 'center',
-    marginTop: 24,
-  },
-  biometricText: {
-    fontFamily: typography.fontFamilies.roboto,
-    fontSize: 11,
-    color: colors.textSecondary,
-    marginTop: 8,
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   visitorLink: {
     flexDirection: 'row',
@@ -243,11 +250,11 @@ const styles = StyleSheet.create({
   logoEms: {
     width: 80,
     height: 32,
-    marginLeft: -20,
+    marginLeft: 0,
   },
   logoSiemens: {
     width: 100,
     height: 32,
-    marginRight: -20,
+    marginRight: 0,
   },
 });

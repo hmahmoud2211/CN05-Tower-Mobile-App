@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'transparent',
     paddingTop: 10,
-    paddingHorizontal: 16,
+    paddingHorizontal: 0,
   },
   topBar: {
     flexDirection: 'row',

@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ViewProps, StyleProp, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { BlurView } from 'expo-blur';
 import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { gradients } from '../../theme/gradients';
@@ -29,8 +30,14 @@ export const GlassCard: React.FC<GlassCardProps> = ({
           { borderColor: highlighted ? colors.accentCyan : borderColor },
         ]}
       >
+        <BlurView
+          intensity={8}
+          tint="dark"
+          style={StyleSheet.absoluteFill}
+        />
+
         <View style={styles.rimTop} />
-        
+
         <LinearGradient
           colors={gradients.glowTeal as [string, string, string]}
           start={{ x: 0, y: 0 }}

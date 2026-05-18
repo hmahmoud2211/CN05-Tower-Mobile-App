@@ -59,7 +59,7 @@ export const TowerInfoScreen = () => {
           <Text style={styles.sectionTitle}>AI Integration Ideas</Text>
           {AI_IDEAS.map((idea, index) => (
             <View key={index} style={styles.card}>
-              <BlurView intensity={20} tint="dark" style={styles.cardBlur}>
+              <BlurView intensity={35} tint="dark" style={styles.cardBlur}>
                 <View style={styles.cardHeader}>
                   <MaterialCommunityIcons name={idea.icon as any} size={24} color={colors.accentCyan} />
                   <Text style={styles.cardTitle}>{idea.title}</Text>

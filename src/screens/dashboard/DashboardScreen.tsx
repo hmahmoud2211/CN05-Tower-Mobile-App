@@ -38,26 +38,63 @@ export const DashboardScreen = () => {
             <MaterialCommunityIcons name="heart-pulse" size={20} color={colors.accentCyan} />
           </View>
           
-          <View style={styles.healthGrid}>
-            <View style={styles.healthItem}>
-              <Typography variant="hero" fontFamily="orbitron" color={colors.success}>
-                {health.overall}%
-              </Typography>
-              <Typography variant="xs" color={colors.textSecondary} style={{ marginTop: 4 }}>OVERALL</Typography>
+          <View style={styles.healthContainer}>
+            {/* Left side: Overall Health Gauge */}
+            <View style={styles.overallSection}>
+              <CircularGauge
+                value={health.overall}
+                max={100}
+                label="OVERALL"
+                unit="%"
+                size={100}
+                color={colors.success}
+                gradientColors={[colors.accentCyan, colors.success]}
+              />
             </View>
-            <View style={styles.healthDivider} />
-            <View style={styles.healthItem}>
-              <Typography variant="xxl" fontFamily="orbitron" color={colors.textPrimary}>
-                {health.hvac}%
-              </Typography>
-              <Typography variant="xs" color={colors.textSecondary} style={{ marginTop: 4 }}>HVAC</Typography>
-            </View>
-            <View style={styles.healthDivider} />
-            <View style={styles.healthItem}>
-              <Typography variant="xxl" fontFamily="orbitron" color={colors.warning}>
-                {health.elevators}%
-              </Typography>
-              <Typography variant="xs" color={colors.textSecondary} style={{ marginTop: 4 }}>LIFTS</Typography>
+            
+            <View style={styles.verticalDivider} />
+            
+            {/* Right side: Sub-systems breakdown */}
+            <View style={styles.subsystemsSection}>
+              {/* HVAC */}
+              <View style={styles.subsystemItem}>
+                <View style={styles.subsystemInfo}>
+                  <View style={styles.subsystemLabelRow}>
+                    <MaterialCommunityIcons name="fan" size={16} color={colors.accentCyan} style={{ marginRight: 6 }} />
+                    <Typography variant="sm" color={colors.textPrimary} style={{ fontWeight: 'bold' }}>
+                      HVAC Units
+                    </Typography>
+                  </View>
+                  <Typography variant="sm" fontFamily="orbitron" color={colors.textPrimary}>
+                    {health.hvac}%
+                  </Typography>
+                </View>
+                {/* Horizontal Progress Bar */}
+                <View style={styles.progressBarBg}>
+                  <View style={[styles.progressBarFill, { width: `${health.hvac}%`, backgroundColor: colors.accentCyan }]} />
+                </View>
+              </View>
+
+              <View style={{ height: 16 }} />
+
+              {/* LIFTS */}
+              <View style={styles.subsystemItem}>
+                <View style={styles.subsystemInfo}>
+                  <View style={styles.subsystemLabelRow}>
+                    <MaterialCommunityIcons name="elevator" size={16} color={colors.warning} style={{ marginRight: 6 }} />
+                    <Typography variant="sm" color={colors.textPrimary} style={{ fontWeight: 'bold' }}>
+                      Lifts / Elevators
+                    </Typography>
+                  </View>
+                  <Typography variant="sm" fontFamily="orbitron" color={colors.warning}>
+                    {health.elevators}%
+                  </Typography>
+                </View>
+                {/* Horizontal Progress Bar */}
+                <View style={styles.progressBarBg}>
+                  <View style={[styles.progressBarFill, { width: `${health.elevators}%`, backgroundColor: colors.warning }]} />
+                </View>
+              </View>
             </View>
           </View>
         </GlassCard>
@@ -182,19 +219,49 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  healthGrid: {
+  healthContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
-  healthItem: {
+  overallSection: {
+    width: '35%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  verticalDivider: {
+    width: 1,
+    height: 70,
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    marginHorizontal: 12,
+  },
+  subsystemsSection: {
     flex: 1,
+    paddingLeft: 4,
+    justifyContent: 'center',
+  },
+  subsystemItem: {
+    width: '100%',
+  },
+  subsystemInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  subsystemLabelRow: {
+    flexDirection: 'row',
     alignItems: 'center',
   },
-  healthDivider: {
-    width: 1,
-    height: 40,
-    backgroundColor: 'rgba(255,255,255,0.1)',
+  progressBarBg: {
+    width: '100%',
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+    overflow: 'hidden',
+  },
+  progressBarFill: {
+    height: '100%',
+    borderRadius: 3,
   },
 });
