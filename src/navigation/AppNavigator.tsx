@@ -41,9 +41,9 @@ export const AppNavigator = () => {
           </>
         ) : (
           <>
+            <Stack.Screen name="Main" component={MainTabNavigator} />
             <Stack.Screen name="FacilitySelection" component={FacilitySelectionScreen} />
             <Stack.Screen name="MallBrands" component={MallBrandsScreen} />
-            <Stack.Screen name="Main" component={MainTabNavigator} />
           </>
         )}
       </Stack.Navigator>

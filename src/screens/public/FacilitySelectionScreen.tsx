@@ -50,7 +50,10 @@ export const FacilitySelectionScreen = () => {
     <AppBackground imageSource={bgImage}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.header}>
-          <TouchableOpacity onPress={logout} style={styles.backButton}>
+          <TouchableOpacity 
+            onPress={() => navigation.canGoBack() ? navigation.goBack() : logout()} 
+            style={styles.backButton}
+          >
             <MaterialCommunityIcons name="arrow-left" size={24} color={colors.textPrimary} />
           </TouchableOpacity>
           <Text style={styles.title}>Select Destination</Text>

@@ -16,12 +16,14 @@ import { AppHeader } from '../../components/layout/AppHeader';
 
 const { width } = Dimensions.get('window');
 
+const bgImage = require('../../../assets/cn05-night.png');
+
 export const DashboardScreen = () => {
   const { health, activeAlarms, powerConsumptionKw, waterConsumptionM3 } = useTowerStore();
   const { user } = useAuthStore();
 
   return (
-    <AppBackground>
+    <AppBackground imageSource={bgImage}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         
         <AppHeader />

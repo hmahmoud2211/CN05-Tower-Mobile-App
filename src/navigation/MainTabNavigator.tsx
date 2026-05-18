@@ -1,6 +1,8 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Platform, StyleSheet } from 'react-native';
+import { BlurView } from 'expo-blur';
 import { DashboardScreen } from '../screens/dashboard/DashboardScreen';
 import { DigitalTwinScreen } from '../screens/digital-twin/DigitalTwinScreen';
 import { AIAssistantScreen } from '../screens/ai-assistant/AIAssistantScreen';
@@ -24,14 +26,38 @@ export const MainTabNavigator = () => {
       screenOptions={{
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: colors.background,
-          borderTopColor: colors.glassBorder,
-          height: 60,
-          paddingBottom: 8,
-          paddingTop: 8,
+          position: 'absolute',
+          bottom: Platform.OS === 'ios' ? 24 : 16,
+          left: 16,
+          right: 16,
+          height: 68,
+          borderRadius: 34,
+          borderWidth: 1,
+          borderColor: 'rgba(255, 255, 255, 0.15)',
+          backgroundColor: 'rgba(11, 21, 38, 0.5)',
+          elevation: 0,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.25,
+          shadowRadius: 15,
+          overflow: 'hidden',
+          paddingBottom: Platform.OS === 'ios' ? 12 : 10,
+          paddingTop: 10,
         },
+        tabBarBackground: () => (
+          <BlurView
+            intensity={45}
+            tint="dark"
+            style={StyleSheet.absoluteFill}
+          />
+        ),
         tabBarActiveTintColor: colors.accentCyan,
         tabBarInactiveTintColor: colors.textMuted,
+        tabBarLabelStyle: {
+          fontSize: 10,
+          fontWeight: '500',
+          marginTop: -2,
+        },
       }}
     >
       <Tab.Screen

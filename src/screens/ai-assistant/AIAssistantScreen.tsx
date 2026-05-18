@@ -7,6 +7,8 @@ import { colors } from '../../theme/colors';
 import { spacing } from '../../theme/spacing';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+const bgImage = require('../../../assets/cn05-night.png');
+
 export const AIAssistantScreen = () => {
   const [messages, setMessages] = useState([
     { id: '1', text: 'System initialized. I am CN-05 AI. How can I assist you with the tower operations today?', sender: 'ai' },
@@ -37,7 +39,7 @@ export const AIAssistantScreen = () => {
   };
 
   return (
-    <AppBackground>
+    <AppBackground imageSource={bgImage}>
       <KeyboardAvoidingView 
         style={styles.container}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}

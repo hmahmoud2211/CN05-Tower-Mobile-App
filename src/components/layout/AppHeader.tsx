@@ -49,6 +49,11 @@ export const AppHeader: React.FC = () => {
     logout();
   };
 
+  const navigateToFacilities = () => {
+    setMenuOpen(false);
+    navigation.navigate('FacilitySelection' as never);
+  };
+
   const toggleLang = () => {
     setLang(prev => prev === 'EN' ? 'AR' : 'EN');
   };
@@ -99,6 +104,13 @@ export const AppHeader: React.FC = () => {
           <View style={styles.menuOverlay}>
             <TouchableWithoutFeedback>
               <View style={styles.menuSheet}>
+                <TouchableOpacity style={styles.menuItem} activeOpacity={0.75} onPress={navigateToFacilities}>
+                  <MaterialCommunityIcons name="office-building" size={18} color={colors.textPrimary} />
+                  <Typography variant="sm" color={colors.textPrimary} style={styles.menuItemText}>
+                    Facilities
+                  </Typography>
+                </TouchableOpacity>
+                <View style={{ height: 1, backgroundColor: 'rgba(255,255,255,0.08)' }} />
                 <TouchableOpacity style={styles.menuItem} activeOpacity={0.75} onPress={onLogout}>
                   <MaterialCommunityIcons name="logout" size={18} color={colors.danger} />
                   <Typography variant="sm" color={colors.danger} style={styles.menuItemText}>

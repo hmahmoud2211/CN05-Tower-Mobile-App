@@ -10,6 +10,8 @@ import { CircularGauge } from '../../components/gauges/CircularGauge';
 
 import { AppHeader } from '../../components/layout/AppHeader';
 
+const bgImage = require('../../../assets/cn05-night.png');
+
 export const MaintenanceScreen = () => {
   const systems = [
     { name: 'HVAC Units', health: 92, status: 'normal' },
@@ -24,7 +26,7 @@ export const MaintenanceScreen = () => {
   ];
 
   return (
-    <AppBackground>
+    <AppBackground imageSource={bgImage}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <AppHeader />
         <View style={{ height: 20 }} />

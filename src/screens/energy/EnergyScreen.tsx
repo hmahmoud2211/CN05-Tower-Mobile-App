@@ -11,10 +11,11 @@ import { mockData } from '../../data/mockData';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const { width } = Dimensions.get('window');
+const bgImage = require('../../../assets/cn05-night.png');
 
 export const EnergyScreen = () => {
   return (
-    <AppBackground>
+    <AppBackground imageSource={bgImage}>
       <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
           <Typography variant="xl" fontFamily="orbitron" color={colors.textPrimary}>
