@@ -32,11 +32,9 @@ export const LoginScreen = () => {
 
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
-            <Image source={require('../../../assets/HAFEZ_logo_transparent.png')} style={styles.centerLogo} resizeMode="contain" />
             <Text style={styles.welcomeText}>WELCOME TO</Text>
             <Text style={styles.title}>CN-05</Text>
-            <Text style={styles.towerText}>TOWER</Text>
-          </View>
+           </View>
 
           <View style={styles.formContainer}>
             <View style={styles.inputGroup}>
@@ -97,11 +95,6 @@ const styles = StyleSheet.create({
     marginBottom: 48,
     width: '100%',
   },
-  centerLogo: {
-    width: 140,
-    height: 70,
-    marginBottom: 16,
-  },
   welcomeText: {
     fontFamily: typography.fontFamilies.robotoMedium,
     fontSize: 13,
@@ -118,16 +111,7 @@ const styles = StyleSheet.create({
     letterSpacing: 4,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  towerText: {
-    fontFamily: typography.fontFamilies.orbitron,
-    fontSize: 18,
-    color: 'rgba(255, 255, 255, 0.75)',
-    letterSpacing: 8,
-    textAlign: 'center',
-    marginTop: 4,
-    textTransform: 'uppercase',
+    marginBottom: 12,
   },
   subtitle: {
     fontFamily: typography.fontFamilies.roboto,
