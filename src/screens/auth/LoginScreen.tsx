@@ -29,12 +29,12 @@ export const LoginScreen = () => {
           <Image source={require('../../../assets/ems.png')} style={styles.logoEms} resizeMode="contain" />
           <Image source={require('../../../assets/siemens.png')} style={styles.logoSiemens} resizeMode="contain" />
         </View>
-
         <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
           <View style={styles.header}>
             <Text style={styles.welcomeText}>WELCOME TO</Text>
             <Text style={styles.title}>CN-05</Text>
-           </View>
+            <Text style={styles.towerText}>TOWER</Text>
+          </View>
 
           <View style={styles.formContainer}>
             <View style={styles.inputGroup}>
@@ -106,12 +106,21 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: typography.fontFamilies.orbitron,
-    fontSize: 40,
+    fontSize: 32,
     color: colors.accentCyan,
     letterSpacing: 4,
     textAlign: 'center',
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginBottom: 4,
+  },
+  towerText: {
+    fontFamily: typography.fontFamilies.orbitron,
+    fontSize: 15,
+    color: '#FFFFFF',
+    letterSpacing: 10,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginTop: -2,
   },
   subtitle: {
     fontFamily: typography.fontFamilies.roboto,
